@@ -1,6 +1,7 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const Employee = require("./lib/Employee");
 const inquirer = require("inquirer");
 const fs = require("fs");
 const employees = [];
@@ -55,7 +56,7 @@ function newEmployee() {
               {
                 tpye: "Input",
                 message: `What is the Engineer's Git Hub user name?`,
-                name: "officeNumber",
+                name: "gitHub",
               },
             ])
             .then(({ gitHub }) => {
@@ -70,7 +71,7 @@ function newEmployee() {
               {
                 tpye: "Input",
                 message: `What school does the Intern attend?`,
-                name: "officeNumber",
+                name: "school",
               },
             ])
             .then(({ school }) => {
@@ -94,66 +95,56 @@ function another() {
       if (more) newEmployee();
       else renderHtml();
     });
-}
 
-function renderHtml() {
-  switch (employee) {
-    case "Manager":
-      fs.writeFileSync(
-        "./index.html",
-        /*html*/ `
-    ${employees.map(
-      (employee) => /* html*/ `
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-     <h5 class="card-title">${employee.getName()}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Title: ${employee.getRole()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">ID: ${employee.getId()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Email: ${employee.getEmail()}</h6>
+    function renderHtml() {
+fs.writeFileSync('./index.html', /*html*/`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<div class="jumbotron" style="text-align: center; border-bottom: 5px solid black; opacity : .9; background : rgb(10, 162, 213); color:black; text-align:center; " id="jumbotron">
+  <h1 class="display-4" style="font-weight:bolder;">Team Roster</h1>
   </div>
-  `
-    )}
-</div> 
-`
-      );
-    case "Engineer":
-      fs.writeFileSync(
-        "./index.html",
-        /*html*/ `
-    ${employees.map(
-      (employee) => /* html*/ `
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-     <h5 class="card-title">${employee.getName()}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Title: ${employee.getRole()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">ID: ${employee.getId()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Email: ${employee.getEmail()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Git Hub: ${employee.getGithub()}</h6>
+  <div class="container">
+  <div class="row">
+
+${employees.map(employee => /*html*/`
+
+<div class= "col-md-3 text-dark bg-light" style = "margin : 5px;">
+  <h1 class="card-title">${employee.getName()}</h1>
+  <h2 class="card-subtitle mb-2 text-muted">${employee.getRole()}</h2>
+  <h3 class="card-subtitle mb-2 text-muted">Id: ${employee.getId()}</h3>
+  <h3 class="card-subtitle mb-2 text-muted"><a href="mailto:${employee.getEmail()}" class="card-link">${employee.getEmail()}</a></h3>
+  <h3 class="card-subtitle mb-2 text-muted"> ${uniqueField(employee)}</h3>
+  
+</div>
+
+`)} 
   </div>
-  `
-    )}
-</div> 
-`
-      );
-    case "Intern":
-      fs.writeFileSync(
-        "./index.html",
-        /*html*/ `
-    ${employees.map(
-      (employee) => /* html*/ `
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-     <h5 class="card-title">${employee.getName()}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">Title: ${employee.getRole()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">ID: ${employee.getId()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">Email: ${employee.getEmail()}</h6>
-      <h6 class="card-subtitle mb-2 text-muted">School: ${employee.getSchool()}</h6>
-  </div>
-  `
-    )}
-</div> 
-`
-      );
+        
+        `)
+    }
+  }
+
+  function uniqueField (employee) {
+    switch (employee.getRole()) {
+      case "Manager":
+        return `Office:${employee.getOfficeNumber()}`
+        
+      // ask for office number
+      case "Engineer":
+        //ask for git hub
+        return `<a href="https://github.com/${employee.getGithub()}" class="card-link">Github</a>`
+        
+      case "Intern":
+        // ask about school
+        return employee.getSchool()
+        
   }
 }
-newEmployee();
+newEmployee()
+
