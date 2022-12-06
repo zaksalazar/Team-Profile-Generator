@@ -30,6 +30,7 @@ SO THAT I have quick access to their emails and GitHub profiles
   The styling for the generated cards was styled inline using Bootstrap.
 
 ## Link to Demo Video
+https://drive.google.com/file/d/1ux7R5tlihFRY9ZnDtlpyITnXr58WlU0k/view?usp=share_link
 
 ## Github Repository
 https://github.com/zaksalazar/Team-Profile-Generator
