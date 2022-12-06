@@ -123,7 +123,6 @@ ${employees.map(
   <h3 class="card-subtitle mb-2 text-dark">Id: ${employee.getId()}</h3>
   <h4 class="card-subtitle mb-2 text-muted"><a href="mailto:${employee.getEmail()}" class="card-link">${employee.getEmail()}</a></h3>
   <h4 class="card-subtitle mb-2 text-muted"> ${uniqueField(employee)}</h3>
-  
 </div>
 
 `
